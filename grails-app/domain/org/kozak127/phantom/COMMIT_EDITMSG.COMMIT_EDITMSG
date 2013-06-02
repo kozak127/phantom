@@ -1,0 +1,44 @@
+
+
+# --------------
+# Please enter the commit message for your changes. Everything below
+# this paragraph is ignored, and an empty message aborts the commit.
+# Just close the window to accept your message.
+diff --git a/README.md b/README.md
+index 56cf8f5..6badfec 100644
+--- a/README.md
++++ b/README.md
+@@ -1,4 +1,6 @@
+ phantom
+ =======
+ 
+-Phantom is a web application for managing public events, with registration etc.
++Phantom is a web application for managing public events, with registration etc, written in grails 2.2.1.
++
++App is still in very heavy development.
+\ No newline at end of file
+diff --git a/application.properties b/application.properties
+index e755743..bd866a2 100644
+--- a/application.properties
++++ b/application.properties
+@@ -1,5 +1,6 @@
+ #Grails Metadata file
+-#Sun Jun 02 15:26:11 CEST 2013
++#Sun Jun 02 16:05:18 CEST 2013
+ app.grails.version=2.2.1
+ app.name=phantom
+ app.version=0.1
++plugins.spring-security-core=1.2.7.3
+diff --git a/grails-app/conf/Config.groovy b/grails-app/conf/Config.groovy
+index 2a8ef3f..a980781 100644
+--- a/grails-app/conf/Config.groovy
++++ b/grails-app/conf/Config.groovy
+@@ -89,3 +89,8 @@ log4j = {
+            'org.hibernate',
+            'net.sf.ehcache.hibernate'
+ }
++
++// Added by the Spring Security Core plugin:
++grails.plugins.springsecurity.userLookup.userDomainClassName = 'org.kozak127.phantom.User'
++grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'org.kozak127.phantom.UserRole'
++grails.plugins.springsecurity.authority.className = 'org.kozak127.phantom.Role'
