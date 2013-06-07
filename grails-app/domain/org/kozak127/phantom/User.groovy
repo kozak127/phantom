@@ -16,7 +16,6 @@ class User {
 	String firstName
 	String lastName
 
-	//TODO change that miserable names into something more sensible
 	static hasMany = [reservation:Reservation, organizer:Organizer, volunteer:Volunteer]
 	static constraints = {
 		username blank: false, unique: true
@@ -51,5 +50,22 @@ class User {
 
 	protected void encodePassword() {
 		password = springSecurityService.encodePassword(password)
+	}
+
+	boolean isAdmin() {
+		if (UserRole.findByUserAndRole(this, Role.findByAuthority('ROLE_ADMIN'))) {
+			return true
+		} else {
+			return false
+		}
+	}
+
+	void addRole(String role) {
+		UserRole.create(this, Role.findByAuthority(role))
+	}
+
+	void remove() {
+		removed = true
+		save(flush: true)
 	}
 }
