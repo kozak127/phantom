@@ -26,11 +26,11 @@
 	<g:select id="event" name="event.id" from="${org.kozak127.phantom.Event.list()}" optionKey="id" required="" value="${reservationInstance?.event?.id}" class="many-to-one"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: reservationInstance, field: 'dateOfExpirationIfNotPaid', 'error')} required">
-	<label for="dateOfExpirationIfNotPaid">
-		<g:message code="reservation.dateOfExpirationIfNotPaid.label" default="Date Of Expiration If Not Paid" />
+<div class="fieldcontain ${hasErrors(bean: reservationInstance, field: 'dateOfCreation', 'error')} required">
+	<label for="dateOfCreation">
+		<g:message code="reservation.dateOfCreation.label" default="Date Of Creation" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="dateOfExpirationIfNotPaid" precision="day"  value="${reservationInstance?.dateOfExpirationIfNotPaid}"  />
+	<g:datePicker name="dateOfCreation" precision="day"  value="${reservationInstance?.dateOfCreation}"  />
 </div>
 

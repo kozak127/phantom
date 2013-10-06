@@ -50,11 +50,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${reservationInstance?.dateOfExpirationIfNotPaid}">
+				<g:if test="${reservationInstance?.dateOfCreation}">
 				<li class="fieldcontain">
-					<span id="dateOfExpirationIfNotPaid-label" class="property-label"><g:message code="reservation.dateOfExpirationIfNotPaid.label" default="Date Of Expiration If Not Paid" /></span>
+					<span id="dateOfCreation-label" class="property-label"><g:message code="reservation.dateOfCreation.label" default="Date Of Creation" /></span>
 					
-						<span class="property-value" aria-labelledby="dateOfExpirationIfNotPaid-label"><g:formatDate date="${reservationInstance?.dateOfExpirationIfNotPaid}" /></span>
+						<span class="property-value" aria-labelledby="dateOfCreation-label"><g:formatDate date="${reservationInstance?.dateOfCreation}" /></span>
 					
 				</li>
 				</g:if>
