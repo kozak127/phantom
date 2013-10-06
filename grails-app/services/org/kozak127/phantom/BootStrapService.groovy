@@ -20,7 +20,7 @@ class BootStrapService {
 				bootTest()
 				break
 			default:
-				System.out.println("KURWA MAĆ!")
+				System.out.println("ERROR: NO ENVIRONMENT CASE")
 				break
 		}
 	}
