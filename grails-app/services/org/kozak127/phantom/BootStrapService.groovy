@@ -147,6 +147,11 @@ class BootStrapService {
 	// TODO fix findByUserAndEvent - it is not working properly
 	private void initialOrganizators() {
 		
+		def user1 = User.findByUsername('user1')
+		def user2 = User.findByUsername('user2')
+		def event1 = Event.findByName('event1')
+		def event2 = Event.findByName('event2')
+
 		def organizer1 = Organizer.findByUserAndEvent(user1, event1) ?: new Organizer(
 						user: User.findByUsername('user1'),
 						event: Event.findByName('event1')
@@ -164,6 +169,11 @@ class BootStrapService {
 	}
 
 	private void initialReservations() {
+
+		def user3 = User.findByUsername('user3')
+		def user4 = User.findByUsername('user4')
+		def event1 = Event.findByName('event1')
+		def event2 = Event.findByName('event2')
 
 		def reservation1 = Reservation.findByUserAndEvent(user3, event1) ?: new Reservation(
 						user: User.findByUsername('user3'),
@@ -186,6 +196,9 @@ class BootStrapService {
 
 	private void initialVolunteers() {
 		
+		def user5 = User.findByUsername('user5')
+		def event1 = Event.findByName('event1')
+
 		def volunteer1 = Volunteer.findByUserAndEvent(user5, event1) ?: new Volunteer(
 						user: User.findByUsername('user5'),
 						event: Event.findByName('event1')
