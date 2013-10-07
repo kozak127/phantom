@@ -178,21 +178,21 @@ class BootStrapService {
 		def reservation1 = Reservation.findByUserAndEvent(user3, event1) ?: new Reservation(
 						user: User.findByUsername('user3'),
 						event: Event.findByName('event1'),
-						dateOfCreation: new Date(System.currentTimeMillis()),
+						creationDate: new Date(System.currentTimeMillis()),
 						paid: true
 						).save(failOnError: true)
 
 		def reservation2 = Reservation.findByUserAndEvent(user3, event2) ?: new Reservation(
 						user: User.findByUsername('user3'),
 						event: Event.findByName('event2'),
-						dateOfCreation: new Date(System.currentTimeMillis()),
+						creationDate: new Date(System.currentTimeMillis()),
 						paid: false
 						).save(failOnError: true)
 
 		def reservation3 = Reservation.findByUserAndEvent(user4, event1) ?: new Reservation(
 						user: User.findByUsername('user4'),
 						event: Event.findByName('event1'),
-						dateOfCreation: new Date(System.currentTimeMillis()),
+						creationDate: new Date(System.currentTimeMillis()),
 						paid: true
 						).save(failOnError: true)
 	}

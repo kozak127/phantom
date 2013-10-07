@@ -10,15 +10,16 @@ class Event {
         reservations:Reservation,
         organizators:Organizer,
         volunteers:Volunteer,
-        pointsOfTheProgram:PointOfTheProgram
+        programItems:ProgramItem,
+        stalls:Stall
         ]
 
     static constraints = {
     	name(blank: false, unique: true)
-    	
     	reservations(nullable: true)
     	organizators(nullable: true)
     	volunteers(nullable: true)
-        pointsOfTheProgram(nullable: true)
+        programItems(nullable: true)
+        stalls(nullable: true)
     }
 }

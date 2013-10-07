@@ -16,7 +16,16 @@ class User {
 	String firstName
 	String lastName
 
-	static hasMany = [reservation:Reservation, organizer:Organizer, volunteer:Volunteer, pointOfTheProgram:PointOfTheProgram]
+	static hasMany = [
+		reservation:Reservation,
+		organizer:Organizer,
+		volunteer:Volunteer,
+		programItem:ProgramItem,
+		programItemWorker:ProgramItemWorker,
+		stalls:Stall,
+		stallWorker:StallWorker
+		]
+		
 	static constraints = {
 		username blank: false, unique: true
 		password blank: false
@@ -28,6 +37,10 @@ class User {
     	reservation(nullable: true)
     	organizer(nullable: true)
     	volunteer(nullable: true)
+    	programItem(nullable: true)
+    	programItemWorker(nullable: true)
+    	stalls(nullable: true)
+    	stallWorker(nullable: true)
 	}
 
 	static mapping = {
