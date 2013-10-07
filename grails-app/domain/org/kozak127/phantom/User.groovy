@@ -16,7 +16,7 @@ class User {
 	String firstName
 	String lastName
 
-	static hasMany = [reservation:Reservation, organizer:Organizer, volunteer:Volunteer]
+	static hasMany = [reservation:Reservation, organizer:Organizer, volunteer:Volunteer, pointOfTheProgram:PointOfTheProgram]
 	static constraints = {
 		username blank: false, unique: true
 		password blank: false

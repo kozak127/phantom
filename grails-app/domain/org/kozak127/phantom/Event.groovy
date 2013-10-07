@@ -6,7 +6,12 @@ class Event {
 	Date dateStart
 	Date dateEnd
 
-	static hasMany = [reservations:Reservation, organizators:Organizer, volunteers:Volunteer]
+	static hasMany = [
+        reservations:Reservation,
+        organizators:Organizer,
+        volunteers:Volunteer,
+        pointsOfTheProgram:PointOfTheProgram
+        ]
 
     static constraints = {
     	name(blank: false, unique: true)
