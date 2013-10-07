@@ -26,11 +26,11 @@
 	<g:select id="event" name="event.id" from="${org.kozak127.phantom.Event.list()}" optionKey="id" required="" value="${reservationInstance?.event?.id}" class="many-to-one"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: reservationInstance, field: 'dateOfCreation', 'error')} required">
-	<label for="dateOfCreation">
-		<g:message code="reservation.dateOfCreation.label" default="Date Of Creation" />
+<div class="fieldcontain ${hasErrors(bean: reservationInstance, field: 'creationDate', 'error')} required">
+	<label for="creationDate">
+		<g:message code="reservation.creationDate.label" default="Creation Date" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="dateOfCreation" precision="day"  value="${reservationInstance?.dateOfCreation}"  />
+	<g:datePicker name="creationDate" precision="day"  value="${reservationInstance?.creationDate}"  />
 </div>
 

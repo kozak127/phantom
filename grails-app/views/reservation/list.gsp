@@ -30,7 +30,7 @@
 					
 						<th><g:message code="reservation.event.label" default="Event" /></th>
 					
-						<g:sortableColumn property="dateOfCreation" title="${message(code: 'reservation.dateOfCreation.label', default: 'Date Of Creation')}" />
+						<g:sortableColumn property="creationDate" title="${message(code: 'reservation.creationDate.label', default: 'Creation Date')}" />
 					
 					</tr>
 				</thead>
@@ -44,7 +44,7 @@
 					
 						<td>${fieldValue(bean: reservationInstance, field: "event")}</td>
 					
-						<td><g:formatDate date="${reservationInstance.dateOfCreation}" /></td>
+						<td><g:formatDate date="${reservationInstance.creationDate}" /></td>
 					
 					</tr>
 				</g:each>

@@ -3,7 +3,7 @@ package org.kozak127.phantom
 class Reservation {
 	
 	boolean paid
-	Date dateOfCreation
+	Date creationDate
 
 	static hasOne = [user: User, event: Event]
 

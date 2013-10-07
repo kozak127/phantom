@@ -50,11 +50,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${reservationInstance?.dateOfCreation}">
+				<g:if test="${reservationInstance?.creationDate}">
 				<li class="fieldcontain">
-					<span id="dateOfCreation-label" class="property-label"><g:message code="reservation.dateOfCreation.label" default="Date Of Creation" /></span>
+					<span id="creationDate-label" class="property-label"><g:message code="reservation.creationDate.label" default="Creation Date" /></span>
 					
-						<span class="property-value" aria-labelledby="dateOfCreation-label"><g:formatDate date="${reservationInstance?.dateOfCreation}" /></span>
+						<span class="property-value" aria-labelledby="creationDate-label"><g:formatDate date="${reservationInstance?.creationDate}" /></span>
 					
 				</li>
 				</g:if>
