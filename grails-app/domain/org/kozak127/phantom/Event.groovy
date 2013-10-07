@@ -1,5 +1,4 @@
 package org.kozak127.phantom
-import org.kozak127.phantom.Staff.*
 
 class Event {
 
@@ -18,8 +17,6 @@ class Event {
         withTransaction {
             Stall.findAllByEvent(this).each { it.deleteWithDependencies() }
             ProgramItem.findAllByEvent(this).each { it.deleteWithDependencies() }
-            Volunteer.findAllByEvent(this).each { it.delete }
-            EventOrganizer.findAllByEvent(this).each { it.delete }
             Reservation.findAllByEvent(this).each { it.deleteWithDependencies() }
             this.delete()
         }

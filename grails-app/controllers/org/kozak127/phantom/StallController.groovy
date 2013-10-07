@@ -90,7 +90,7 @@ class StallController {
         }
 
         try {
-            stallInstance.delete(flush: true)
+            stallInstance.deleteWithDependencies()
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'stall.label', default: 'Stall'), id])
             redirect(action: "list")
         }

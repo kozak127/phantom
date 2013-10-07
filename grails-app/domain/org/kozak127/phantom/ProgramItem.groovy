@@ -1,5 +1,6 @@
 package org.kozak127.phantom
-import org.kozak127.phantom.Staff.*
+import org.kozak127.phantom.Staff.ProgramItemCreator
+import org.kozak127.phantom.Staff.ProgramItemWorker
 
 class ProgramItem {
 
@@ -16,13 +17,13 @@ class ProgramItem {
     }
 
     def payReservationsForStaff() {
-        StaffMember.findAllByProgramItem(this).each {it.payReservation()}
+        StaffMember.findAllByProgramItem(this).each { it.payReservation() }
     }
 
     void deleteWithDependencies() {
         withTransaction {
             creator.delete()
-            ProgramItemWorker.findAllByProgramItem(this).each { it.delete }
+            ProgramItemWorker.findAllByProgramItem(this).each { it.delete() }
             this.delete()
         }
     }

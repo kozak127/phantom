@@ -1,4 +1,6 @@
 package org.kozak127.phantom
+import org.kozak127.phantom.Staff.StallOwner
+import org.kozak127.phantom.Staff.StallWorker
 
 class Stall {
 
@@ -8,19 +10,21 @@ class Stall {
     boolean accepted
     Date creationDate
 
-    static belongstTo = [owner: StallOwner, event: Event]
-    
+    static belongsTo = [event: Event, owner: StallOwner]
+
     static constraints = {
+        owner(nullable: false)
+        event(nullable: false)
     }
 
     def payReservationsForStaff() {
-        StaffMember.findAllByProgramItem(this).each {it.payReservation()}
+        StaffMember.findAllByStall(this).each { it.payReservation() }
     }
 
     void deleteWithDependencies() {
 		withTransaction {
 			owner.delete()
-			StallWorker.findAllByStall(this).each { it.delete }
+			StallWorker.findAllByStall(this).each { it.delete() }
 			this.delete()
 		}
 	}

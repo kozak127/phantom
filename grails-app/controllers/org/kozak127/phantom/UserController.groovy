@@ -90,7 +90,7 @@ class UserController {
         }
 
         try {
-            userInstance.delete(flush: true)
+            userInstance.deleteWithDependencies()
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'user.label', default: 'User'), id])
             redirect(action: "list")
         }

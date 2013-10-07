@@ -20,8 +20,8 @@ class User {
         username blank: false, unique: true
         password blank: false
 
-        //email(blank: false, email: true, unique: true)
-        email(blank: false, email: true)
+        email(blank: false, email: true, unique: true)
+        //email(blank: false, email: true)
         firstName(blank: false)
         lastName(blank: false)
     }
@@ -68,5 +68,13 @@ class User {
     String toString() {
         String tmpString = username + ' ' + password + ' ' + email + ' ' + firstName + ' ' + lastName
         return tmpString
+    }
+
+    void deleteWithDependencies() {
+        withTransaction {
+            Reservation.findAllByUser(this).each { it.deleteWithDependencies() }
+            Event.findAllByCreator(this).each { it.deleteWithDependencies() }
+            this.delete()
+        }
     }
 }

@@ -90,7 +90,7 @@ class ProgramItemController {
         }
 
         try {
-            programItemInstance.delete(flush: true)
+            programItemInstance.deleteWithDependencies()
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'programItem.label', default: 'ProgramItem'), id])
             redirect(action: "list")
         }
