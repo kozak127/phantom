@@ -19,5 +19,6 @@ class Event {
     	reservations(nullable: true)
     	organizators(nullable: true)
     	volunteers(nullable: true)
+        pointsOfTheProgram(nullable: true)
     }
 }
