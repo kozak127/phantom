@@ -1,15 +1,16 @@
 package org.kozak127.phantom
+import org.kozak127.phantom.Staff.*
 
 class Reservation {
-	
-	boolean paid
-	Date creationDate
+    
+    boolean paid
+    Date creationDate
 
-	static hasOne = [user: User, event: Event]
+    static belongsTo = [user: User, event: Event]
 
     static constraints = {
-    	paid(nullable: false)
-    	user(nullable: false)
-    	event(nullable: false)
+        paid(nullable: false)
+        user(nullable: false)
+        event(nullable: false)
     }
 }
