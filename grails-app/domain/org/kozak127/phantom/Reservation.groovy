@@ -13,4 +13,11 @@ class Reservation {
         user(nullable: false)
         event(nullable: false)
     }
+
+    void deleteWithDependencies() {
+		withTransaction {
+			StaffMember.findAllByReservation(this).each { it.delete() }
+			this.delete()
+		}
+	}
 }

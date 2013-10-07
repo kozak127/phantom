@@ -148,11 +148,11 @@ class BootStrapService {
         def user2 = User.findByUsername('user2')
         def user3 = User.findByUsername('user3')
         def user4 = User.findByUsername('user4')
-        def user5 = User.findByUsername('user4')
-        def user6 = User.findByUsername('user4')
-        def user7 = User.findByUsername('user4')
-        def user8 = User.findByUsername('user4')
-        def user9 = User.findByUsername('user4')
+        def user5 = User.findByUsername('user5')
+        def user6 = User.findByUsername('user6')
+        def user7 = User.findByUsername('user7')
+        def user8 = User.findByUsername('user8')
+        def user9 = User.findByUsername('user9')
         
         def event1 = Event.findByName('event1')
 
@@ -182,7 +182,7 @@ class BootStrapService {
 
     private void initialVolunteers() {
         
-        def user4 = User.findByUsername('user3')
+        def user4 = User.findByUsername('user4')
         def event1 = Event.findByName('event1')
         def res4 = Reservation.findByUserAndEvent(user4, event1)
 
