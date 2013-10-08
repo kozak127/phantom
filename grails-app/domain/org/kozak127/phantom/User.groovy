@@ -70,8 +70,38 @@ class User {
         return tmpString
     }
 
+    def getReservations() {
+        return Reservation.findAllByUser(this)
+    }
+
+    def getEvents() {
+        return Event.findAllByCreator(this)
+    }
+
+    def getStalls() {
+        return Stall.findAllByOwner(this)
+    }
+
+    def getProgramItems() {
+        return ProgramItem.findAllByCreator(this)
+    }
+
+    def getStallsStaff() {
+        def list
+        getStalls.each { (list << it.getWorkers).flatten }
+        return list
+    }
+
+    def getProgramItemsStaff() {
+        def list
+        getProgramItems.each { (list << it.getWorkers).flatten }
+        return list
+    }
+
     void deleteWithDependencies() {
         withTransaction {
+            getStalls().each { it.deleteWithDependencies() }
+            getProgramItems.each { it.deleteWithDependencies() }
             Reservation.findAllByUser(this).each { it.deleteWithDependencies() }
             Event.findAllByCreator(this).each { it.deleteWithDependencies() }
             this.delete()

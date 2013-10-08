@@ -17,14 +17,19 @@ class Stall {
         event(nullable: false)
     }
 
-    def payReservationsForStaff() {
-        StaffMember.findAllByStall(this).each { it.payReservation() }
+    def getWorkers() {
+        return StallWorker.findAllByStall(this)
+    }
+
+    def payReservations() {
+        owner.payReservation()
+        getWorkers.each { it.payReservation() }
     }
 
     void deleteWithDependencies() {
 		withTransaction {
 			owner.delete()
-			StallWorker.findAllByStall(this).each { it.delete() }
+			getWorkers().each { it.delete() }
 			this.delete()
 		}
 	}

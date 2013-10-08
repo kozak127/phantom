@@ -16,14 +16,19 @@ class ProgramItem {
         event(nullable: false)
     }
 
-    def payReservationsForStaff() {
-        StaffMember.findAllByProgramItem(this).each { it.payReservation() }
+    def getWorkers() {
+        return ProgramItemWorker.findAllByProgramItem(this)
+    }
+
+    def payReservations() {
+        creator.payReservation()
+        getWorkers.each { it.payReservation() }
     }
 
     void deleteWithDependencies() {
         withTransaction {
             creator.delete()
-            ProgramItemWorker.findAllByProgramItem(this).each { it.delete() }
+            getWorkers().each { it.delete() }
             this.delete()
         }
     }

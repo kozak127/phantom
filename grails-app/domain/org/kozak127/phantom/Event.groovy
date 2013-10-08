@@ -13,6 +13,22 @@ class Event {
         creator(nullable: false)
     }
 
+    def getStalls() {
+        return Stall.findAllByEvent(this)
+    }
+
+    def getProgramItems() {
+        return ProgramItem.findAllByEvent(this)
+    }
+
+    def getVolunteers() {
+        return Volunteer.findAllByEvent(this)
+    }
+
+    def getEventOrganizers() {
+        return EventOrganizer.findAllByEvent(this)
+    }
+
     void deleteWithDependencies() {
         withTransaction {
             Stall.findAllByEvent(this).each { it.deleteWithDependencies() }
