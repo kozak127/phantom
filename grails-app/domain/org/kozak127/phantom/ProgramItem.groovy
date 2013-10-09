@@ -15,21 +15,4 @@ class ProgramItem {
         creator(nullable: false)
         event(nullable: false)
     }
-
-    def getWorkers() {
-        return ProgramItemWorker.findAllByProgramItem(this)
-    }
-
-    def payReservations() {
-        creator.payReservation()
-        getWorkers.each { it.payReservation() }
-    }
-
-    void deleteWithDependencies() {
-        withTransaction {
-            creator.delete()
-            getWorkers().each { it.delete() }
-            this.delete()
-        }
-    }
 }
