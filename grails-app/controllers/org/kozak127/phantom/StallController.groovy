@@ -38,7 +38,7 @@ class StallController {
             return
         }
 
-        [stallInstance: stallInstance]
+        [stallInstance: stallInstance, stallInstanceWorkerList: stallInstance.getWorkers()]
     }
 
     def edit(Long id) {

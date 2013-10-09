@@ -23,6 +23,24 @@
 			</g:if>
 			<ol class="property-list stall">
 			
+				<g:if test="${stallInstance?.owner}">
+				<li class="fieldcontain">
+					<span id="owner-label" class="property-label"><g:message code="stall.owner.label" default="Owner" /></span>
+					
+						<span class="property-value" aria-labelledby="owner-label"><g:link controller="stallOwner" action="show" id="${stallInstance?.owner?.id}">${stallInstance?.owner?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${stallInstance?.event}">
+				<li class="fieldcontain">
+					<span id="event-label" class="property-label"><g:message code="stall.event.label" default="Event" /></span>
+					
+						<span class="property-value" aria-labelledby="event-label"><g:link controller="event" action="show" id="${stallInstance?.event?.id}">${stallInstance?.event?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${stallInstance?.accepted}">
 				<li class="fieldcontain">
 					<span id="accepted-label" class="property-label"><g:message code="stall.accepted.label" default="Accepted" /></span>

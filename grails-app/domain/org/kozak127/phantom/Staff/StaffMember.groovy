@@ -1,5 +1,6 @@
 package org.kozak127.phantom.Staff
 import org.kozak127.phantom.Reservation
+import org.kozak127.phantom.Event
 
 class StaffMember {
 
@@ -8,7 +9,11 @@ class StaffMember {
     	reservation(nullable:false)
     }
 
-    def payReservation() {
+    void payReservation() {
         reservation.paid = true
+    }
+
+    Event getEvent() {
+    	return reservation.event
     }
 }

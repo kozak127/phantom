@@ -21,6 +21,10 @@ class Stall {
         return StallWorker.findAllByStall(this)
     }
 
+    def getWorkerUsers() {
+        return getWorkers()*.reservation.user
+    }
+
     def payReservations() {
         owner.payReservation()
         getWorkers.each { it.payReservation() }

@@ -24,6 +24,10 @@
 				<thead>
 					<tr>
 					
+						<th><g:message code="stall.owner.label" default="Owner" /></th>
+					
+						<th><g:message code="stall.event.label" default="Event" /></th>
+					
 						<g:sortableColumn property="accepted" title="${message(code: 'stall.accepted.label', default: 'Accepted')}" />
 					
 						<g:sortableColumn property="creationDate" title="${message(code: 'stall.creationDate.label', default: 'Creation Date')}" />
@@ -32,23 +36,23 @@
 					
 						<g:sortableColumn property="paid" title="${message(code: 'stall.paid.label', default: 'Paid')}" />
 					
-						<g:sortableColumn property="size" title="${message(code: 'stall.size.label', default: 'Size')}" />
-					
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${stallInstanceList}" status="i" var="stallInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${stallInstance.id}">${fieldValue(bean: stallInstance, field: "accepted")}</g:link></td>
+						<td><g:link action="show" id="${stallInstance.id}">${fieldValue(bean: stallInstance, field: "owner")}</g:link></td>
+					
+						<td>${fieldValue(bean: stallInstance, field: "event")}</td>
+					
+						<td><g:formatBoolean boolean="${stallInstance.accepted}" /></td>
 					
 						<td><g:formatDate date="${stallInstance.creationDate}" /></td>
 					
 						<td>${fieldValue(bean: stallInstance, field: "name")}</td>
 					
 						<td><g:formatBoolean boolean="${stallInstance.paid}" /></td>
-					
-						<td>${fieldValue(bean: stallInstance, field: "size")}</td>
 					
 					</tr>
 				</g:each>

@@ -2,6 +2,22 @@
 
 
 
+<div class="fieldcontain ${hasErrors(bean: stallInstance, field: 'owner', 'error')} required">
+	<label for="owner">
+		<g:message code="stall.owner.label" default="Owner" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="owner" name="owner.id" from="${org.kozak127.phantom.Staff.StallOwner.list()}" optionKey="id" required="" value="${stallInstance?.owner?.id}" class="many-to-one"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: stallInstance, field: 'event', 'error')} required">
+	<label for="event">
+		<g:message code="stall.event.label" default="Event" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select id="event" name="event.id" from="${org.kozak127.phantom.Event.list()}" optionKey="id" required="" value="${stallInstance?.event?.id}" class="many-to-one"/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: stallInstance, field: 'accepted', 'error')} ">
 	<label for="accepted">
 		<g:message code="stall.accepted.label" default="Accepted" />

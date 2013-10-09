@@ -16,8 +16,6 @@ class Role {
         [
             ["ADMIN", 'user'],
             ["USER", 'reservation'],
-            ["ORGANIZER", 'event'],
-            ["VOLUNTEER", 'event'],
         ].each {
             new Role(authority:it[0], defaultController:it[1]).save()
         }

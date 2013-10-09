@@ -66,8 +66,7 @@ class User {
     }
 
     String toString() {
-        String tmpString = username + ' ' + password + ' ' + email + ' ' + firstName + ' ' + lastName
-        return tmpString
+        return username
     }
 
     def getReservations() {
