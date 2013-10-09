@@ -1,8 +1,13 @@
 package org.kozak127.phantom
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.plugins.springsecurity.Secured
+import grails.plugins.springsecurity.SpringSecurityService
 
 class ProgramItemController {
+
+    SpringSecurityService springSecurityService
+    User user = springSecurityService.currentUser
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -12,6 +17,9 @@ class ProgramItemController {
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
+        if (response.getCookie('phantomSystemMode') == 'user') {
+            [programItemInstanceList: user.getProgramItems(), programItemInstanceTotal: user.getProgramItems().count()]
+        }
         [programItemInstanceList: ProgramItem.list(params), programItemInstanceTotal: ProgramItem.count()]
     }
 
