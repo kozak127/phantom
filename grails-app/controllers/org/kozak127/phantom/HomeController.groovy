@@ -1,4 +1,5 @@
 package org.kozak127.phantom
+
 import grails.plugins.springsecurity.SpringSecurityService
 
 class HomeController {

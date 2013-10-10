@@ -3,11 +3,12 @@ package org.kozak127.phantom
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
 import grails.plugins.springsecurity.SpringSecurityService
+import org.kozak127.phantom.ProgramItemService
+import org.kozak127.phantom.User
 
 class ProgramItemController {
 
     SpringSecurityService springSecurityService
-    User user = springSecurityService.currentUser
     ProgramItemService programItemService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -18,7 +19,11 @@ class ProgramItemController {
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        return programItemService.getList()
+        System.out.println('attempt to get to service')
+        String viewEvent = g.cookie(name: 'phantomViewEvent')
+        //[programItemInstanceList: ProgramItem.list(params), programItemInstanceTotal: ProgramItem.count()]
+        
+        return programItemService.getList(springSecurityService.currentUser, viewEvent, params)
     }
 
     def create() {
