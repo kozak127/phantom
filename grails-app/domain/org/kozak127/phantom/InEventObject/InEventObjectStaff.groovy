@@ -3,8 +3,9 @@ import org.kozak127.phantom.Reservation
 
 class InEventObjectStaff {
 
-	static belongsTo = [reservation: Reservation]
 	Date creationDate
+
+	static belongsTo = [reservation: Reservation]	
     
     static constraints = {
     	reservation(nullable:false)
