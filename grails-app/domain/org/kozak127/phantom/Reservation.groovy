@@ -4,7 +4,7 @@ class Reservation {
     
     boolean paid = false
     Date creationDate
-    Volunteer volunteer
+    //Volunteer volunteer
 
     static belongsTo = [user: User, event: Event]
 
@@ -12,6 +12,5 @@ class Reservation {
         paid(nullable: false)
         user(nullable: false)
         event(nullable: false)
-        volunteer(nullable: true)
     }
 }

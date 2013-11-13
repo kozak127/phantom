@@ -19,7 +19,7 @@ class ReservationService {
         withTransaction {
             getInEventObjects(reservation).each { inEventObjectService.deleteWithDependencies(it) }
             InEventObjectWorker.findAllByReservation(reservation).each { it.delete() }
-            reservation.volunteer.delete()
+            //reservation.volunteer.delete()
             reservation.delete()
         }
     }
