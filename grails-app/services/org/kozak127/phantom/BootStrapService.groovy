@@ -2,8 +2,6 @@ package org.kozak127.phantom
 
 import grails.util.Environment
 import org.springframework.transaction.annotation.Transactional
-import org.kozak127.phantom.Staff.EventOrganizer
-import org.kozak127.phantom.Staff.Volunteer
 
 class BootStrapService {
 
@@ -61,8 +59,6 @@ class BootStrapService {
     private void defaultRoles() {
         def userRole = Role.findByAuthority('ROLE_USER') ?: new Role(authority: 'ROLE_USER').save(failOnError: true)
         def adminRole = Role.findByAuthority('ROLE_ADMIN') ?: new Role(authority: 'ROLE_ADMIN').save(failOnError: true)
-        def volunteerRole = Role.findByAuthority('ROLE_VOLUNTEER') ?: new Role(authority: 'ROLE_VOLUNTEER').save(failOnError: true)
-        def eventOrganizerRole = Role.findByAuthority('ROLE_ORGANIZER') ?: new Role(authority: 'ROLE_ORGANIZER').save(failOnError: true)
     }
 
     private void developmentData() {
@@ -117,8 +113,10 @@ class BootStrapService {
     }
             
     private void createTestOrganizer(Reservation res) {
-        EventOrganizer tmp = new EventOrganizer(
-            reservation: res
+        Volunteer tmp = new Volunteer(
+            reservation: res,
+            organizer: true,
+            accepted: true
             ).save(failOnError: true)
         System.out.println('Created organizer')
     }        
@@ -176,8 +174,8 @@ class BootStrapService {
         Reservation res2 = Reservation.findByUserAndEvent(user2, event1)
         Reservation res3 = Reservation.findByUserAndEvent(user3, event1)
 
-        EventOrganizer.findByReservation(res2) ?: createTestOrganizer(res2) 
-        EventOrganizer.findByReservation(res3) ?: createTestOrganizer(res3)
+        Volunteer.findByReservationAndOrganizer(res2, true) ?: createTestOrganizer(res2) 
+        Volunteer.findByReservationAndOrganizer(res3, true) ?: createTestOrganizer(res3)
     }
 
     private void initialVolunteers() {

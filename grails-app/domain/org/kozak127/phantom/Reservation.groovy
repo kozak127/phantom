@@ -1,9 +1,8 @@
 package org.kozak127.phantom
-import org.kozak127.phantom.Staff.StaffMember
 
 class Reservation {
     
-    boolean paid
+    boolean paid = false
     Date creationDate
 
     static belongsTo = [user: User, event: Event]
@@ -13,15 +12,4 @@ class Reservation {
         user(nullable: false)
         event(nullable: false)
     }
-
-    def getStaffMembers() {
-        return StaffMember.findAllByReservation(this)
-    }
-
-    void deleteWithDependencies() {
-		withTransaction {
-			getStaffMembers().each { it.delete() }
-			this.delete()
-		}
-	}
 }

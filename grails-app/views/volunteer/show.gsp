@@ -1,5 +1,5 @@
 
-<%@ page import="org.kozak127.phantom.Staff.Volunteer" %>
+<%@ page import="org.kozak127.phantom.Volunteer" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -22,6 +22,24 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list volunteer">
+			
+				<g:if test="${volunteerInstance?.accepted}">
+				<li class="fieldcontain">
+					<span id="accepted-label" class="property-label"><g:message code="volunteer.accepted.label" default="Accepted" /></span>
+					
+						<span class="property-value" aria-labelledby="accepted-label"><g:formatBoolean boolean="${volunteerInstance?.accepted}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${volunteerInstance?.organizer}">
+				<li class="fieldcontain">
+					<span id="organizer-label" class="property-label"><g:message code="volunteer.organizer.label" default="Organizer" /></span>
+					
+						<span class="property-value" aria-labelledby="organizer-label"><g:formatBoolean boolean="${volunteerInstance?.organizer}" /></span>
+					
+				</li>
+				</g:if>
 			
 				<g:if test="${volunteerInstance?.reservation}">
 				<li class="fieldcontain">

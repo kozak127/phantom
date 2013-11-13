@@ -90,7 +90,7 @@ class ReservationController {
         }
 
         try {
-            reservationInstance.deleteWithDependencies()
+            reservationInstance.delete(flush: true)
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'reservation.label', default: 'Reservation'), id])
             redirect(action: "list")
         }

@@ -90,7 +90,7 @@ class EventController {
         }
 
         try {
-            eventInstance.deleteWithDependencies()
+            eventInstance.delete(flush: true)
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'event.label', default: 'Event'), id])
             redirect(action: "list")
         }

@@ -1,5 +1,5 @@
 
-<%@ page import="org.kozak127.phantom.Staff.Volunteer" %>
+<%@ page import="org.kozak127.phantom.Volunteer" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -24,6 +24,10 @@
 				<thead>
 					<tr>
 					
+						<g:sortableColumn property="accepted" title="${message(code: 'volunteer.accepted.label', default: 'Accepted')}" />
+					
+						<g:sortableColumn property="organizer" title="${message(code: 'volunteer.organizer.label', default: 'Organizer')}" />
+					
 						<th><g:message code="volunteer.reservation.label" default="Reservation" /></th>
 					
 					</tr>
@@ -32,7 +36,11 @@
 				<g:each in="${volunteerInstanceList}" status="i" var="volunteerInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${volunteerInstance.id}">${fieldValue(bean: volunteerInstance, field: "reservation")}</g:link></td>
+						<td><g:link action="show" id="${volunteerInstance.id}">${fieldValue(bean: volunteerInstance, field: "accepted")}</g:link></td>
+					
+						<td><g:formatBoolean boolean="${volunteerInstance.organizer}" /></td>
+					
+						<td>${fieldValue(bean: volunteerInstance, field: "reservation")}</td>
 					
 					</tr>
 				</g:each>
