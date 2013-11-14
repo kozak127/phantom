@@ -4,9 +4,9 @@ import org.kozak127.phantom.InEventObject.InEventObjectService
 
 class UserService {
 
-	InEventObjectService inEventObjectService
-	ReservationService reservationService
-	EventService eventService
+    InEventObjectService inEventObjectService
+    ReservationService reservationService
+    EventService eventService
 
     def getReservations(User user) {
         return Reservation.findAllByUser(user)

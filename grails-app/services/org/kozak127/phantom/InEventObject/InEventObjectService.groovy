@@ -28,7 +28,7 @@ class InEventObjectService {
 
     void deleteWithDependencies(InEventObject object) {
         withTransaction {
-        	getStaff.each { it.delete() }
+            getStaff.each { it.delete() }
             InEventObject.delete()
         }
     }
