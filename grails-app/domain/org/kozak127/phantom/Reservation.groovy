@@ -4,7 +4,6 @@ class Reservation {
     
     boolean paid = false
     Date creationDate
-    //Volunteer volunteer
 
     static belongsTo = [user: User, event: Event]
 

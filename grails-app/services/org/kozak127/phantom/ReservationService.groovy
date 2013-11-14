@@ -7,7 +7,7 @@ class ReservationService {
 
 	InEventObjectService inEventObjectService
 
-	def getInEventObjects(Reservation reservation) {
+	def getCreatedInEventObjects(Reservation reservation) {
 		return InEventObjectCreator.findAllByReservation(reservation)*.inEventObject
 	}
 
@@ -15,11 +15,15 @@ class ReservationService {
 		return InEventObjectWorker.findAllByReservation(reservation)
 	}
 
+	def getVolunteer(Reservation reservation) {
+		return Volunteer.findByReservation(reservation)
+	}
+
 	void deleteWithDependencies(Reservation reservation) {
         withTransaction {
-            getInEventObjects(reservation).each { inEventObjectService.deleteWithDependencies(it) }
-            InEventObjectWorker.findAllByReservation(reservation).each { it.delete() }
-            //reservation.volunteer.delete()
+            getCreatedInEventObjects(reservation).each { inEventObjectService.deleteWithDependencies(it) }
+            getInEventObjectWorkers(reservation).each { it.delete() }
+            getVolunteer(reservation).each { it.delete() }
             reservation.delete()
         }
     }

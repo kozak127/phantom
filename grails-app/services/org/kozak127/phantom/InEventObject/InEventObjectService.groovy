@@ -6,15 +6,29 @@ class InEventObjectService {
         return InEventObjectWorker.findAllWhere(inEventObject: object)
     }
 
-    def getWorkerUsers() {
-        // TODO
-        //return this.getWorkers(object)*.reservation.user
+    def getStaff(InEventObject object) {
+        return InEventObjectStaff.findAllWhere(inEventObject: object)
+    }
+
+    def getStaffUser(InEventObjectStaff staff) {
+        return staff.reservation.user
+    }
+
+    def getWorkerUsers(InEventObject object) {
+        return getWorkers(object).each { getStaffUser(it) }
+    }
+
+    def getReservations(InEventObject object) {
+        return getStaff(object)*.reservation
+    }
+
+    def payStaffReservations(InEventObject object) {
+        getReservations.each { it.paid = true }
     }
 
     void deleteWithDependencies(InEventObject object) {
         withTransaction {
-        	this.getWorkers(object).each { it.delete() }
-            InEventObject.creator.delete()
+        	getStaff.each { it.delete() }
             InEventObject.delete()
         }
     }

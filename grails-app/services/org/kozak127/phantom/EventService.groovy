@@ -4,23 +4,28 @@ import org.kozak127.phantom.InEventObject.InEventObject
 
 class EventService {
 
-    def getInEventObjects(Event object) {
-        return InEventObject.findAllByEvent(object)
+    ReservationService reservationService
+
+    def getInEventObjects(Event event) {
+        return InEventObject.findAllByEvent(event)
     }
 
-    def getVolunteers(Event object) {
-        return Volunteer.findAllByEvent(object)
+    def getVolunteers(Event event) {
+        return Volunteer.findAllByEvent(event)
     }
 
-    def getEventOrganizers(Event object) {
-        return Volunteer.findAllByEventAndOrganizer(object, true)
+    def getEventOrganizers(Event event) {
+        return Volunteer.findAllByEventAndOrganizer(event, true)
     }
 
-    void deleteWithDependencies(Event object) {
+    def getReservations(Event event) {
+        return Reservation.findAllByEvent(event)
+    }
+
+    void deleteWithDependencies(Event event) {
         withTransaction {
-            InEventObject.findAllByEvent(object).each { inEventObjectService.deleteWithDependencies(it) }
-            Reservation.findAllByEvent(object).each { reservationService.deleteWithDependencies(it) }
-            object.delete()
+            getReservations(event).each { reservationService.deleteWithDependencies(it) }
+            event.delete()
         }
     }
 }

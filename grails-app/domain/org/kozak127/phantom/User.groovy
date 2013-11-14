@@ -21,7 +21,6 @@ class User {
         password blank: false
 
         email(blank: false, email: true, unique: true)
-        //email(blank: false, email: true)
         firstName(blank: false)
         lastName(blank: false)
     }
