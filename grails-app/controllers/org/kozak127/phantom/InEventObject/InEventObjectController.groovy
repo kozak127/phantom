@@ -1,8 +1,15 @@
 package org.kozak127.phantom.InEventObject
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.plugins.springsecurity.SpringSecurityService
+import grails.plugins.springsecurity.Secured
 
+import org.kozak127.phantom.User
+
+@Secured(['IS_AUTHENTICATED_REMEMBERED'])
 class InEventObjectController {
+
+    SpringSecurityService springSecurityService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -20,11 +27,16 @@ class InEventObjectController {
     }
 
     def save() {
+        User currentUser = springSecurityService.currentUser
+        
         def inEventObjectInstance = new InEventObject(params)
         if (!inEventObjectInstance.save(flush: true)) {
             render(view: "create", model: [inEventObjectInstance: inEventObjectInstance])
             return
         }
+
+        def inEventObjectCreatorInstance = inEventObjectInstance.createDependencies(currentUser)
+        inEventObjectCreatorInstance.save(flush: true)
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'inEventObject.label', default: 'InEventObject'), inEventObjectInstance.id])
         redirect(action: "show", id: inEventObjectInstance.id)

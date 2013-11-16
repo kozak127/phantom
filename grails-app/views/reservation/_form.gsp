@@ -31,6 +31,6 @@
         <g:message code="reservation.creationDate.label" default="Creation Date" />
         <span class="required-indicator">*</span>
     </label>
-    <g:datePicker name="creationDate" precision="day"  value="${reservationInstance?.creationDate}"  />
+    <g:textField name="creationDate" disabled="true" value="${reservationInstance?.creationDate}"  />
 </div>
 

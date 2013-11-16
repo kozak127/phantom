@@ -67,4 +67,28 @@ class User {
     String toString() {
         return username
     }
+
+    def getReservation(Event event) {
+        return Reservation.findByUserAndEvent(this, event)
+    }
+
+    def getReservations() {
+        return Reservation.findAllByUser(this)
+    }
+
+    def getInEventObjects() {
+        return getReservations().each { it.getInEventObjects() }
+    }
+
+    def getEvents() {
+        return Event.findAllByCreator(this)
+    }
+
+    void deleteWithDependencies() {
+        withTransaction {
+            getReservations().each { it.deleteWithDependencies() }
+            getEvents().each { it.deleteWithDependencies() }
+            this.delete()
+        }
+    }
 }

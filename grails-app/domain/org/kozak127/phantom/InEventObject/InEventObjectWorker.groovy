@@ -4,9 +4,21 @@ class InEventObjectWorker extends InEventObjectStaff {
 
     boolean accepted = false
 
-    static belongsTo = [inEventObject: InEventObject]
-    
-    static constraints = {
-        inEventObject(nullable:false)
+    static def create(Map properties) {
+    	withTransaction {
+			InEventObjectStaff object = new InEventObjectStaff()
+			object.update(properties)
+
+			return object
+		}
+    }
+
+    def update(Map properties) {
+    	withTransaction {
+			this.properties = properties
+			save()
+
+			return this
+		}
     }
 }
