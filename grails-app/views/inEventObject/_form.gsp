@@ -18,11 +18,12 @@
 	<g:textField name="creationDate" disabled="true"  value="${inEventObjectInstance?.creationDate}"  />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: inEventObjectInstance, field: 'accepted', 'error')} ">
-	<label for="accepted">
-		<g:message code="inEventObject.accepted.label" default="Accepted" />
-		
-	</label>
-	<g:checkBox name="accepted" value="${inEventObjectInstance?.accepted}" />
-</div>
-
+<sec:ifAllGranted roles="ROLE_ADMIN">
+	<div class="fieldcontain ${hasErrors(bean: inEventObjectInstance, field: 'accepted', 'error')} ">
+		<label for="accepted">
+			<g:message code="inEventObject.accepted.label" default="Accepted" />
+			
+		</label>
+		<g:checkBox name="accepted" value="${inEventObjectInstance?.accepted}" />
+	</div>
+</sec:ifAllGranted>

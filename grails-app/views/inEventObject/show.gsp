@@ -27,7 +27,7 @@
 				<li class="fieldcontain">
 					<span id="event-label" class="property-label"><g:message code="inEventObject.event.label" default="Event" /></span>
 					
-						<span class="property-value" aria-labelledby="event-label"><g:link controller="event" action="show" id="${inEventObjectInstance?.event?.id}">${inEventObjectInstance?.event?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="event-label"><g:link controller="event" action="show" id="${inEventObjectInstance?.event?.id}">${inEventObjectInstance?.event?.name?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

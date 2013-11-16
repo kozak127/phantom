@@ -36,7 +36,7 @@
 				<g:each in="${inEventObjectInstanceList}" status="i" var="inEventObjectInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${inEventObjectInstance.id}">${fieldValue(bean: inEventObjectInstance, field: "event")}</g:link></td>
+						<td><g:link action="show" id="${inEventObjectInstance.id}">${fieldValue(bean: inEventObjectInstance, field: "event.name")}</g:link></td>
 					
 						<td><g:formatDate date="${inEventObjectInstance.creationDate}" /></td>
 					

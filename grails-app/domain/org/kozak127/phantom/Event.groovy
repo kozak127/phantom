@@ -3,7 +3,8 @@ package org.kozak127.phantom
 class Event {
 
     String name
-    Date dateStart
+    Date dateStart = new Date()
+    Date dateEnd = new Date()
     Date creationDate = new Date()
 
     static belongsTo = [creator: User]
@@ -34,6 +35,24 @@ class Event {
         withTransaction {
             getReservations().each { it.deleteWithDependencies() }
             this.delete()
+        }
+    }
+
+    static def create(Map properties) {
+        withTransaction {
+            Event object = new Event()
+            object.update(properties)
+
+            return object
+        }
+    }
+
+    def update(Map properties) {
+        withTransaction {
+            this.properties = properties
+            save()
+
+            return this
         }
     }
 }

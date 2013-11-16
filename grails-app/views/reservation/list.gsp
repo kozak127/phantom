@@ -42,7 +42,7 @@
                     
                         <td>${fieldValue(bean: reservationInstance, field: "user")}</td>
                     
-                        <td>${fieldValue(bean: reservationInstance, field: "event")}</td>
+                        <td>${fieldValue(bean: reservationInstance, field: "event.name")}</td>
                     
                         <td><g:formatDate date="${reservationInstance.creationDate}" /></td>
                     

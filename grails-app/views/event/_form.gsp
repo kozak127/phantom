@@ -10,13 +10,15 @@
     <g:textField name="name" required="" value="${eventInstance?.name}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'creator', 'error')} required">
-    <label for="creator">
-        <g:message code="event.creator.label" default="Creator" />
-        <span class="required-indicator">*</span>
-    </label>
-    <g:select id="creator" name="creator.id" from="${org.kozak127.phantom.User.list()}" optionKey="id" required="" value="${eventInstance?.creator?.id}" class="many-to-one"/>
-</div>
+<sec:ifAllGranted roles="ROLE_ADMIN">
+    <div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'creator', 'error')} required">
+        <label for="creator">
+            <g:message code="event.creator.label" default="Creator" />
+            <span class="required-indicator">*</span>
+        </label>
+        <g:select id="creator" name="creator.id" from="${org.kozak127.phantom.User.list()}" optionKey="id" required="" value="${eventInstance?.creator?.id}" class="many-to-one"/>
+    </div>
+</sec:ifAllGranted>
 
 <div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'dateEnd', 'error')} required">
     <label for="dateEnd">

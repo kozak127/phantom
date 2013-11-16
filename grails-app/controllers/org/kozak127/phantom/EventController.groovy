@@ -1,6 +1,8 @@
 package org.kozak127.phantom
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.plugins.springsecurity.SpringSecurityService
+import grails.plugins.springsecurity.Secured
 
 class EventController {
 
@@ -15,10 +17,12 @@ class EventController {
         [eventInstanceList: Event.list(params), eventInstanceTotal: Event.count()]
     }
 
+    @Secured(['ROLE_ADMIN'])
     def create() {
         [eventInstance: new Event(params)]
     }
 
+    @Secured(['ROLE_ADMIN'])
     def save() {
         def eventInstance = new Event(params)
         if (!eventInstance.save(flush: true)) {
@@ -81,6 +85,7 @@ class EventController {
         redirect(action: "show", id: eventInstance.id)
     }
 
+    @Secured(['ROLE_ADMIN'])
     def delete(Long id) {
         def eventInstance = Event.get(id)
         if (!eventInstance) {

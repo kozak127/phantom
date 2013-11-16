@@ -1,24 +1,42 @@
 package org.kozak127.phantom
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.plugins.springsecurity.Secured
+import grails.plugins.springsecurity.SpringSecurityService
 
+
+@Secured(['IS_AUTHENTICATED_FULLY'])
 class UserController {
+
+    SpringSecurityService springSecurityService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def index() {
-        redirect(action: "list", params: params)
+    def checkPermissions() {
+        User user = springSecurityService.currentUser
+        return user.isAdmin()
     }
 
+    def index() {
+        if (checkPermissions()){
+            redirect(action: "list", params: params)
+        } else {
+            redirect(action: "show", params: params)
+        }
+    }
+
+    @Secured(['ROLE_ADMIN'])
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         [userInstanceList: User.list(params), userInstanceTotal: User.count()]
     }
 
+    @Secured(['ROLE_ADMIN'])
     def create() {
         [userInstance: new User(params)]
     }
 
+    @Secured(['ROLE_ADMIN'])
     def save() {
         def userInstance = new User(params)
         if (!userInstance.save(flush: true)) {
@@ -31,6 +49,7 @@ class UserController {
     }
 
     def show(Long id) {
+        if (!checkPermissions()) id = springSecurityService.currentUser.id
         def userInstance = User.get(id)
         if (!userInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), id])
@@ -42,6 +61,7 @@ class UserController {
     }
 
     def edit(Long id) {
+        if (!checkPermissions()) id = springSecurityService.currentUser.id
         def userInstance = User.get(id)
         if (!userInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), id])
@@ -53,6 +73,7 @@ class UserController {
     }
 
     def update(Long id, Long version) {
+        if (!checkPermissions()) id = springSecurityService.currentUser.id
         def userInstance = User.get(id)
         if (!userInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), id])
@@ -81,6 +102,7 @@ class UserController {
         redirect(action: "show", id: userInstance.id)
     }
 
+    @Secured(['ROLE_ADMIN'])
     def delete(Long id) {
         def userInstance = User.get(id)
         if (!userInstance) {
