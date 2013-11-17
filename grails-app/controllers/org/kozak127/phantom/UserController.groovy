@@ -4,7 +4,6 @@ import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
 import grails.plugins.springsecurity.SpringSecurityService
 
-
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class UserController {
 
@@ -68,8 +67,8 @@ class UserController {
             redirect(action: "list")
             return
         }
-
-        [userInstance: userInstance]
+        def passwordCommand = new PasswordCommand()
+        [userInstance: userInstance, passwordCommand: passwordCommand]
     }
 
     def update(Long id, Long version) {
@@ -92,6 +91,13 @@ class UserController {
         }
 
         userInstance.properties = params
+        userInstance.confirmPassword = params.confirmPassword
+
+        if (!userInstance.passwordMatch()) {
+            flash.message = message(code: 'controller.user.edit.passwordMismatch')
+            render(view: 'edit', model: [userInstance: userInstance])
+            return
+        }
 
         if (!userInstance.save(flush: true)) {
             render(view: "edit", model: [userInstance: userInstance])

@@ -6,6 +6,7 @@ class User {
 
     String username
     String password
+    String confirmPassword
     boolean enabled = true
     boolean accountExpired = false
     boolean accountLocked = false
@@ -15,7 +16,9 @@ class User {
     Date birthDate
     String firstName
     String lastName
-        
+    
+    static transients = ['confirmPassword']
+
     static constraints = {
         username blank: false, unique: true
         password blank: false
@@ -90,5 +93,10 @@ class User {
             getEvents().each { it.deleteWithDependencies() }
             this.delete()
         }
+    }
+
+    boolean passwordMatch() {
+        if(password.equals(confirmPassword)) return true
+        return false
     }
 }
