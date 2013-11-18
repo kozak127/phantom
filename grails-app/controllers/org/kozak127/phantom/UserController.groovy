@@ -11,13 +11,13 @@ class UserController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def checkPermissions() {
+    def userIsAdmin() {
         User user = springSecurityService.currentUser
         return user.isAdmin()
     }
 
     def index() {
-        if (checkPermissions()){
+        if (userIsAdmin()){
             redirect(action: "list", params: params)
         } else {
             redirect(action: "show", params: params)
@@ -48,7 +48,7 @@ class UserController {
     }
 
     def show(Long id) {
-        if (!checkPermissions()) id = springSecurityService.currentUser.id
+        if (!userIsAdmin()) id = springSecurityService.currentUser.id
         def userInstance = User.get(id)
         if (!userInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), id])
@@ -60,19 +60,18 @@ class UserController {
     }
 
     def edit(Long id) {
-        if (!checkPermissions()) id = springSecurityService.currentUser.id
+        if (!userIsAdmin()) id = springSecurityService.currentUser.id
         def userInstance = User.get(id)
         if (!userInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), id])
             redirect(action: "list")
             return
         }
-        def passwordCommand = new PasswordCommand()
-        [userInstance: userInstance, passwordCommand: passwordCommand]
+        [userInstance: userInstance]
     }
 
     def update(Long id, Long version) {
-        if (!checkPermissions()) id = springSecurityService.currentUser.id
+        if (!userIsAdmin()) id = springSecurityService.currentUser.id
         def userInstance = User.get(id)
         if (!userInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), id])

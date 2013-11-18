@@ -1,8 +1,19 @@
 package org.kozak127.phantom
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.plugins.springsecurity.Secured
+import grails.plugins.springsecurity.SpringSecurityService
+
+@Secured(['IS_AUTHENTICATED_REMEMBERED'])
 
 class ReservationController {
+
+    SpringSecurityService springSecurityService
+
+    def userIsAdmin() {
+        User user = springSecurityService.currentUser
+        return user.isAdmin()
+    }
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -12,7 +23,14 @@ class ReservationController {
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        [reservationInstanceList: Reservation.list(params), reservationInstanceTotal: Reservation.count()]
+        User user = springSecurityService.currentUser
+        if(user.isAdmin()){
+            return [reservationInstanceList: Reservation.list(params), reservationInstanceTotal: Reservation.count()]
+        } else {
+            def reservationList = user.getReservations(params)
+            return [reservationInstanceList: reservationList, reservationInstanceTotal: reservationList.size()]
+        }
+
     }
 
     def create() {
