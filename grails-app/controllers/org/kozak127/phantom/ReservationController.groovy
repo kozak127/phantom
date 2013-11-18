@@ -5,18 +5,17 @@ import grails.plugins.springsecurity.Secured
 import grails.plugins.springsecurity.SpringSecurityService
 
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
-
 class ReservationController {
 
     SpringSecurityService springSecurityService
 
-    def userIsAdmin() {
-        User user = springSecurityService.currentUser
-        return user.isAdmin()
-    }
-
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+	def userIsAdmin() {
+		User user = springSecurityService.currentUser
+		return user.isAdmin()
+	}
+	
     def index() {
         redirect(action: "list", params: params)
     }

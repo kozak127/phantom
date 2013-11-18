@@ -78,14 +78,29 @@ class User {
     def getReservations(Map params) {
         return Reservation.findAllByUser(this, params)
     }
+	
+	def getVolunteers(Map params) {
+		def listOfVolunteers = []
+		getReservations().each { listOfVolunteers += it.getVolunteer() }
+		listOfVolunteers.flatten()
+		return listOfVolunteers
+	}
 
     def getInEventObjects() {
-        return getReservations().each { it.getInEventObjects() }
-    }
+		def listOfObjects = []
+        getReservations().each { listOfObjects += it.getCreatedInEventObjects() }
+		listOfObjects.flatten()
+    	return listOfObjects
+	}
 
     def getEvents() {
         return Event.findAllByCreator(this)
     }
+	
+	boolean isCreator(Event event) {
+		if(event.creator == this) return true
+		return false
+	}
 
     void deleteWithDependencies() {
         withTransaction {

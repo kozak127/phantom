@@ -25,7 +25,7 @@ class Reservation {
     }
 
     def getVolunteer() {
-        return Volunteer.findByReservation(this)
+        return Volunteer.findAllByReservation(this)
     }
 
     void deleteWithDependencies() {

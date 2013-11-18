@@ -28,6 +28,8 @@
                     
                         <g:sortableColumn property="organizer" title="${message(code: 'volunteer.organizer.label', default: 'Organizer')}" />
                     
+                    	<g:sortableColumn property="event" title="${message(code: 'volunteer.event.label', default: 'Event')}" />
+                    
                         <th><g:message code="volunteer.user.label" default="User" /></th>
                     
                     </tr>
@@ -39,6 +41,8 @@
                         <td><g:link action="show" id="${volunteerInstance.id}">${fieldValue(bean: volunteerInstance, field: "accepted")}</g:link></td>
                     
                         <td><g:formatBoolean boolean="${volunteerInstance.organizer}" /></td>
+                    
+                    	<td>${fieldValue(bean: volunteerInstance, field: "reservation.event.name")}</td>
                     
                         <td>${fieldValue(bean: volunteerInstance, field: "reservation.user.username")}</td>
                     

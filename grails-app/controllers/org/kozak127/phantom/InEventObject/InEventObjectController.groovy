@@ -3,7 +3,6 @@ package org.kozak127.phantom.InEventObject
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.SpringSecurityService
 import grails.plugins.springsecurity.Secured
-
 import org.kozak127.phantom.User
 
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
@@ -13,15 +12,26 @@ class InEventObjectController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+	def userIsAdmin() {
+		User user = springSecurityService.currentUser
+		return user.isAdmin()
+	}
+	
     def index() {
         redirect(action: "list", params: params)
     }
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        [inEventObjectInstanceList: InEventObject.list(params), inEventObjectInstanceTotal: InEventObject.count()]
+        User user = springSecurityService.currentUser
+        if(user.isAdmin()){
+            return [inEventObjectInstanceList: InEventObject.list(params), inEventObjectInstanceTotal: InEventObject.count()]
+        } else {
+        	def inEventObjectList = user.getInEventObjects()
+			[inEventObjectInstanceList: inEventObjectList, inEventObjectInstanceTotal: inEventObjectList.size()]
+		}
     }
-
+	
     def create() {
         [inEventObjectInstance: new InEventObject(params)]
     }

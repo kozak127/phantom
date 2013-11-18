@@ -4,10 +4,19 @@ import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.SpringSecurityService
 import grails.plugins.springsecurity.Secured
 
+@Secured(['IS_AUTHENTICATED_REMEMBERED'])
 class EventController {
 
+	SpringSecurityService springSecurityService
+	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+	boolean userIsCreator(Event event) {
+		User user = springSecurityService.currentUser
+		if(user.isCreator(event)) return true
+		return false		
+	}
+	
     def index() {
         redirect(action: "list", params: params)
     }
@@ -47,6 +56,10 @@ class EventController {
 
     def edit(Long id) {
         def eventInstance = Event.get(id)
+		if(!userIsCreator(eventInstance)) {
+			flash.message = message(code: 'controller.event.edit.notCreator')
+			redirect(action: "show", id: eventInstance.id)
+		}
         if (!eventInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'event.label', default: 'Event'), id])
             redirect(action: "list")

@@ -1,18 +1,35 @@
 package org.kozak127.phantom
 
+import grails.plugins.springsecurity.SpringSecurityService
+import grails.plugins.springsecurity.Secured
 import org.springframework.dao.DataIntegrityViolationException
 
+@Secured(['IS_AUTHENTICATED_REMEMBERED'])
 class VolunteerController {
 
+	SpringSecurityService springSecurityService
+	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+	def userIsAdmin() {
+		User user = springSecurityService.currentUser
+		return user.isAdmin()
+	}
+	
     def index() {
         redirect(action: "list", params: params)
     }
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        [volunteerInstanceList: Volunteer.list(params), volunteerInstanceTotal: Volunteer.count()]
+		User user = springSecurityService.currentUser
+		if(user.isAdmin()){
+			return [volunteerInstanceList: Volunteer.list(params), volunteerInstanceTotal: Volunteer.count()]
+		} else {
+			def volunteerList = user.getVolunteers(params)
+			return [volunteerInstanceList: volunteerList, volunteerInstanceTotal: volunteerList.size()]
+		}
+        
     }
 
     def create() {
@@ -21,6 +38,14 @@ class VolunteerController {
 
     def save() {
         def volunteerInstance = new Volunteer(params)
+		User user = springSecurityService.currentUser
+		print params.eventName
+		volunteerInstance.eventName = params.eventName
+		if(!volunteerInstance.fillReservation(user)) {
+			flash.message = message(code: 'controller.volunteer.reservation.not.found')
+			redirect(controller: "reservation", action: "list")
+		}
+		
         if (!volunteerInstance.save(flush: true)) {
             render(view: "create", model: [volunteerInstance: volunteerInstance])
             return
