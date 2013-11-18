@@ -37,7 +37,17 @@ class ReservationController {
     }
 
     def save() {
+        User user = springSecurityService.currentUser
+        if (!userIsAdmin()) params.user = user
+        
         def reservationInstance = new Reservation(params)
+
+        if (reservationInstance.checkIfDuplicate()) {
+            flash.message = message(code: 'controller.reservation.duplicate')
+            render(view: "create", model: [reservationInstance: reservationInstance])
+            return
+        }
+
         if (!reservationInstance.save(flush: true)) {
             render(view: "create", model: [reservationInstance: reservationInstance])
             return

@@ -39,12 +39,18 @@ class VolunteerController {
     def save() {
         def volunteerInstance = new Volunteer(params)
 		User user = springSecurityService.currentUser
-		print params.eventName
 		volunteerInstance.eventName = params.eventName
 		if(!volunteerInstance.fillReservation(user)) {
 			flash.message = message(code: 'controller.volunteer.reservation.not.found')
 			redirect(controller: "reservation", action: "list")
+            return
 		}
+
+        if(volunteerInstance.checkIfDuplicate()) {
+            flash.message = message(code: 'controller.volunteer.duplicate')
+            render(view: "create", model: [volunteerInstance: volunteerInstance])
+            return
+        }
 		
         if (!volunteerInstance.save(flush: true)) {
             render(view: "create", model: [volunteerInstance: volunteerInstance])

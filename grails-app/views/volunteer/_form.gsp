@@ -23,6 +23,6 @@
         <g:message code="volunteer.event.label" default="Event" />
         <span class="required-indicator">*</span>
     </label>
-    <g:select id="eventName" name="eventName" from="${org.kozak127.phantom.Event.list()}" optionKey="name" required="" value="${volunteerInstance?.eventName}" class="many-to-one"/>
+    <g:select id="eventName" name="eventName" from="${org.kozak127.phantom.Event.list()}" optionKey="name" optionValue="name" required="" value="${volunteerInstance?.eventName}" class="many-to-one"/>
 </div>
 

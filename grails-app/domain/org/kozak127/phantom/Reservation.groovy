@@ -36,4 +36,8 @@ class Reservation {
             this.delete()
         }
     }
+
+    def checkIfDuplicate() {
+        Reservation duplicate = Reservation.findByUserAndEvent(user, event)
+    }
 }

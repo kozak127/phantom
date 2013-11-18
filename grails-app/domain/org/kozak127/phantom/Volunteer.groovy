@@ -23,6 +23,7 @@ class Volunteer {
 		reservation = Reservation.findByUserAndEvent(user, event)
 	}
 	
-	
-	
+	def checkIfDuplicate(){
+		Volunteer duplicate = Volunteer.findByReservation(reservation)
+	}
 }

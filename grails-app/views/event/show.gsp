@@ -66,6 +66,7 @@
                 <fieldset class="buttons">
                     <g:hiddenField name="id" value="${eventInstance?.id}" />
                     <g:link class="edit" action="edit" id="${eventInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+                    <g:link class="create" controller="reservation" action="create"><g:message code="view.button.reservation.create" default="Make reservation" /></g:link>
                     <sec:ifAllGranted roles="ROLE_ADMIN">
                         <g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                     </sec:ifAllGranted>

@@ -45,7 +45,7 @@
                 <li class="fieldcontain">
                     <span id="reservation-label" class="property-label"><g:message code="volunteer.reservation.label" default="Reservation" /></span>
                     
-                        <span class="property-value" aria-labelledby="reservation-label"><g:link controller="reservation" action="show" id="${volunteerInstance?.reservation?.id}">${volunteerInstance?.reservation?.encodeAsHTML()}</g:link></span>
+                        <span class="property-value" aria-labelledby="reservation-label"><g:link controller="reservation" action="show" id="${volunteerInstance?.reservation?.id}">${volunteerInstance?.reservation?.event?.name?.encodeAsHTML()}</g:link></span>
                     
                 </li>
                 </g:if>
