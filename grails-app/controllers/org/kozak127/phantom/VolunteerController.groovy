@@ -39,8 +39,7 @@ class VolunteerController {
     def save() {
         def volunteerInstance = new Volunteer(params)
 		User user = springSecurityService.currentUser
-		volunteerInstance.eventName = params.eventName
-		if(!volunteerInstance.fillReservation(user)) {
+		if(!volunteerInstance.fillReservation(user, params.event)) {
 			flash.message = message(code: 'controller.volunteer.reservation.not.found')
 			redirect(controller: "reservation", action: "list")
             return

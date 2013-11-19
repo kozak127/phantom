@@ -5,9 +5,9 @@ class Volunteer {
     boolean accepted = false
     boolean organizer = false
     Date creationDate = new Date()
-	String eventName
+	//String eventId
 	
-	static transients = ['eventName']
+	//static transients = ['eventId']
 
     static belongsTo = [reservation: Reservation]
 
@@ -18,8 +18,9 @@ class Volunteer {
         creationDate(nullable: false)
     }
 	
-	def fillReservation(User user) {
-		Event event = Event.findByName(eventName)
+	def fillReservation(User user, Map eventParams) {
+		String eventId = eventParams.id
+		Event event = Event.findById(eventId)
 		reservation = Reservation.findByUserAndEvent(user, event)
 	}
 	

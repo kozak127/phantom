@@ -75,6 +75,12 @@ class User {
         return Reservation.findByUserAndEvent(this, event)
     }
 
+    def getReservation(Map params) {
+        String eventId = params.event.id
+        Event event = Event.findById(eventId)
+        return getReservation(event)
+    }
+
     def getReservations(Map params) {
         return Reservation.findAllByUser(this, params)
     }

@@ -4,6 +4,7 @@ import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.SpringSecurityService
 import grails.plugins.springsecurity.Secured
 import org.kozak127.phantom.User
+import org.kozak127.phantom.Event
 
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
 class InEventObjectController {
@@ -38,6 +39,12 @@ class InEventObjectController {
 
     def save() {
         User currentUser = springSecurityService.currentUser
+
+        if (!currentUser.getReservation(params)) {
+            flash.message = message(code: 'controller.InEventObject.reservation.not.found')
+            redirect(controller: "reservation", action: "list")
+            return
+        }
         
         def inEventObjectInstance = new InEventObject(params)
         if (!inEventObjectInstance.save(flush: true)) {

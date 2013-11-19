@@ -7,7 +7,7 @@
 		<g:message code="inEventObject.event.label" default="Event" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="event" name="event.id" from="${org.kozak127.phantom.Event.list()}" optionKey="id" required="" value="${inEventObjectInstance?.event?.id}" class="many-to-one"/>
+	<g:select id="event" name="event.id" from="${org.kozak127.phantom.Event.list()}" optionKey="id" optionValue="name" required="" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: inEventObjectInstance, field: 'creationDate', 'error')} required">
