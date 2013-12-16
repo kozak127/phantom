@@ -1,14 +1,15 @@
 <%@ page import="org.kozak127.phantom.Reservation" %>
 
 
-
-<div class="fieldcontain ${hasErrors(bean: reservationInstance, field: 'paid', 'error')} ">
-    <label for="paid">
-        <g:message code="reservation.paid.label" default="Paid" />
-        
-    </label>
-    <g:checkBox name="paid" value="${reservationInstance?.paid}" />
-</div>
+<sec:ifAllGranted roles="ROLE_ADMIN">
+    <div class="fieldcontain ${hasErrors(bean: reservationInstance, field: 'paid', 'error')} ">
+        <label for="paid">
+            <g:message code="reservation.paid.label" default="Paid" />
+            
+        </label>
+        <g:checkBox name="paid" value="${reservationInstance?.paid}" />
+    </div>
+</sec:ifAllGranted>
 
 <sec:ifAllGranted roles="ROLE_ADMIN">
 <div class="fieldcontain ${hasErrors(bean: reservationInstance, field: 'user', 'error')} required">

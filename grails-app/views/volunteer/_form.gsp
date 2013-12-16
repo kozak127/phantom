@@ -1,14 +1,15 @@
 <%@ page import="org.kozak127.phantom.Volunteer" %>
 
 
-
-<div class="fieldcontain ${hasErrors(bean: volunteerInstance, field: 'accepted', 'error')} ">
-    <label for="accepted">
-        <g:message code="volunteer.accepted.label" default="Accepted" />
-        
-    </label>
-    <g:checkBox name="accepted" value="${volunteerInstance?.accepted}" />
-</div>
+<sec:ifAllGranted roles="ROLE_ADMIN">
+    <div class="fieldcontain ${hasErrors(bean: volunteerInstance, field: 'accepted', 'error')} ">
+        <label for="accepted">
+            <g:message code="volunteer.accepted.label" default="Accepted" />
+            
+        </label>
+        <g:checkBox name="accepted" value="${volunteerInstance?.accepted}" />
+    </div>
+</sec:ifAllGranted>
 
 <div class="fieldcontain ${hasErrors(bean: volunteerInstance, field: 'organizer', 'error')} ">
     <label for="organizer">
