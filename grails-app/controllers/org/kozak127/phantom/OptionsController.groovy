@@ -1,6 +1,5 @@
 package org.kozak127.phantom
 import grails.plugins.springsecurity.Secured
-import grails.plugins.springsecurity.SpringSecurityService
 
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
 class OptionsController {
