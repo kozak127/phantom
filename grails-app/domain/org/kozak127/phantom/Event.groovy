@@ -1,4 +1,5 @@
 package org.kozak127.phantom
+import org.kozak127.phantom.InEventObject.InEventObject
 
 class Event {
 
@@ -20,11 +21,9 @@ class Event {
     }
 
     def getVolunteers() {
-        return Volunteer.findAllByEvent(this)
-    }
-
-    def getOrganizers() {
-        return Volunteer.findAllByEventAndOrganizer(this, true)
+        def volunteers = []
+        getReservations().each { volunteers += it.getVolunteer() }
+        return volunteers
     }
 
     def getReservations() {

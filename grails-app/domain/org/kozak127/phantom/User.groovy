@@ -92,6 +92,40 @@ class User {
 		return listOfVolunteers
 	}
 
+    def getOrganizedEvents() {
+        def listOfEvents = []
+        getReservations().each {
+            def volunteer = it.getVolunteer()
+            if ((volunteer.organizer == true) && (volunteer.accepted == true))  {
+                listOfEvents += volunteer.reservation.event
+            }
+        }
+        listOfEvents += getCreatedEvents()
+        listOfEvents.flatten()
+        return listOfEvents
+    }
+
+    def getOrganizedEventsReservations() {
+        def listOfReservations = []
+        getOrganizedEvents().each { listOfReservations += it.getReservations() }
+        listOfReservations.flatten()
+        return listOfReservations
+    }
+
+    def getOrganizedEventsVolunteers() {
+        def listOfVolunteers = []
+        getOrganizedEvents().each { listOfVolunteers += it.getVolunteers() }
+        listOfVolunteers.flatten()
+        return listOfVolunteers
+    }
+
+    def getOrganizedEventsInEventObjects() {
+        def listOfObjects = []
+        getOrganizedEvents().each { listOfObjects += it.getInEventObjects() }
+        listOfObjects.flatten()
+        return listOfObjects
+    }
+
     def getInEventObjects() {
 		def listOfObjects = []
         getReservations().each { listOfObjects += it.getCreatedInEventObjects() }
@@ -99,7 +133,7 @@ class User {
     	return listOfObjects
 	}
 
-    def getEvents() {
+    def getCreatedEvents() {
         return Event.findAllByCreator(this)
     }
 	

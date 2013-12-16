@@ -8,13 +8,10 @@ import org.springframework.dao.DataIntegrityViolationException
 class VolunteerController {
 
 	SpringSecurityService springSecurityService
+    OptionsService optionsService
+
 	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-
-	def userIsAdmin() {
-		User user = springSecurityService.currentUser
-		return user.isAdmin()
-	}
 	
     def index() {
         redirect(action: "list", params: params)
@@ -22,14 +19,24 @@ class VolunteerController {
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-		User user = springSecurityService.currentUser
-		if(user.isAdmin()){
-			return [volunteerInstanceList: Volunteer.list(params), volunteerInstanceTotal: Volunteer.count()]
-		} else {
-			def volunteerList = user.getVolunteers(params)
-			return [volunteerInstanceList: volunteerList, volunteerInstanceTotal: volunteerList.size()]
-		}
-        
+        User user = springSecurityService.currentUser
+        switch (optionsService.getPerspective()) {
+            case 'admin' :
+                return [volunteerInstanceList: Volunteer.list(params), volunteerInstanceTotal: Volunteer.count()]
+                break
+            case 'organizer' :
+                def volunteerList = user.getOrganizedEventsVolunteers()
+                return [volunteerInstanceList: volunteerList, volunteerInstanceTotal: volunteerList.size()]
+                break
+            case 'normal' :
+                def volunteerList = user.getVolunteers(params)
+                return [volunteerInstanceList: volunteerList, volunteerInstanceTotal: volunteerList.size()]
+                break
+            default :
+                def volunteerList = user.getVolunteers(params)
+                return [volunteerInstanceList: volunteerList, volunteerInstanceTotal: volunteerList.size()]
+                break
+        }        
     }
 
     def create() {

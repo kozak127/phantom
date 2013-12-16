@@ -8,13 +8,9 @@ import grails.plugins.springsecurity.SpringSecurityService
 class ReservationController {
 
     SpringSecurityService springSecurityService
+    OptionsService optionsService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-
-	def userIsAdmin() {
-		User user = springSecurityService.currentUser
-		return user.isAdmin()
-	}
 	
     def index() {
         redirect(action: "list", params: params)
@@ -23,13 +19,23 @@ class ReservationController {
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         User user = springSecurityService.currentUser
-        if(user.isAdmin()){
-            return [reservationInstanceList: Reservation.list(params), reservationInstanceTotal: Reservation.count()]
-        } else {
-            def reservationList = user.getReservations(params)
-            return [reservationInstanceList: reservationList, reservationInstanceTotal: reservationList.size()]
+        switch (optionsService.getPerspective()) {
+            case 'admin' :
+                return [reservationInstanceList: Reservation.list(params), reservationInstanceTotal: Reservation.count()]
+                break
+            case 'organizer' :
+                def reservationList = user.getOrganizedEventsReservations()
+                return [reservationInstanceList: reservationList, reservationInstanceTotal: reservationList.size()]
+                break
+            case 'normal' :
+                def reservationList = user.getReservations(params)
+                return [reservationInstanceList: reservationList, reservationInstanceTotal: reservationList.size()]
+                break
+            default :
+                def reservationList = user.getReservations(params)
+                return [reservationInstanceList: reservationList, reservationInstanceTotal: reservationList.size()]
+                break
         }
-
     }
 
     def create() {
@@ -37,9 +43,6 @@ class ReservationController {
     }
 
     def save() {
-        User user = springSecurityService.currentUser
-        if (!userIsAdmin()) params.user = user
-        
         def reservationInstance = new Reservation(params)
 
         if (reservationInstance.checkIfDuplicate()) {

@@ -5,33 +5,42 @@ import grails.plugins.springsecurity.SpringSecurityService
 import grails.plugins.springsecurity.Secured
 import org.kozak127.phantom.User
 import org.kozak127.phantom.Event
+import org.kozak127.phantom.OptionsService
 
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
 class InEventObjectController {
 
     SpringSecurityService springSecurityService
+    OptionsService optionsService
+
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-
-	def userIsAdmin() {
-		User user = springSecurityService.currentUser
-		return user.isAdmin()
-	}
 	
     def index() {
         redirect(action: "list", params: params)
     }
 
     def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        User user = springSecurityService.currentUser
-        if(user.isAdmin()){
-            return [inEventObjectInstanceList: InEventObject.list(params), inEventObjectInstanceTotal: InEventObject.count()]
-        } else {
-        	def inEventObjectList = user.getInEventObjects()
-			[inEventObjectInstanceList: inEventObjectList, inEventObjectInstanceTotal: inEventObjectList.size()]
-		}
-    }
+            params.max = Math.min(max ?: 10, 100)
+            User user = springSecurityService.currentUser
+            switch (optionsService.getPerspective()) {
+                case 'admin' :
+                    return [inEventObjectInstanceList: InEventObject.list(params), inEventObjectInstanceTotal: InEventObject.count()]
+                    break
+                case 'organizer' :
+                    def inEventObjectList = user.getOrganizedEventsInEventObjects()
+                    return [inEventObjectInstanceList: inEventObjectList, inEventObjectInstanceTotal: inEventObjectList.size()]
+                    break
+                case 'normal' :
+                    def inEventObjectList = user.getInEventObjects()
+                    return [inEventObjectInstanceList: inEventObjectList, inEventObjectInstanceTotal: inEventObjectList.size()]
+                    break
+                default :
+                    def inEventObjectList = user.getInEventObjects()
+                    return [inEventObjectInstanceList: inEventObjectList, inEventObjectInstanceTotal: inEventObjectList.size()]
+                    break
+            }        
+        }
 	
     def create() {
         [inEventObjectInstance: new InEventObject(params)]

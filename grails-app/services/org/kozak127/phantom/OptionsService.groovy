@@ -1,5 +1,6 @@
 package org.kozak127.phantom
 
+import org.codehaus.groovy.grails.web.util.WebUtils
 import grails.plugins.springsecurity.SpringSecurityService
 
 class OptionsService {
@@ -7,19 +8,22 @@ class OptionsService {
     SpringSecurityService springSecurityService
 
     def setOrganizerPerspective() {
-		//optionsService.setPerspective(params)
+		def webUtils = WebUtils.retrieveGrailsWebRequest()
+		def session = webUtils.getSession()
 		def perspective = session["perspective"]
 		session["perspective"] = "organizer"
-		redirect(controller: "reservation", action: "list")
     }
 
     def setNormalPerspective() {
+    	def webUtils = WebUtils.retrieveGrailsWebRequest()
+		def session = webUtils.getSession()
     	def perspective = session["perspective"]
 		session["perspective"] = "normal"
-		redirect(controller: "reservation", action: "list")
     }
 
     def getPerspective(){
+    	def webUtils = WebUtils.retrieveGrailsWebRequest()
+		def session = webUtils.getSession()
     	def user = springSecurityService.currentUser
     	if (user.isAdmin()) {
     		return "admin"
